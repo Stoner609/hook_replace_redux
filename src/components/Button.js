@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 
 import { CounterContext } from "../store/CounterProvider";
 
-export const Increment = () => {
+export const AsyncIncrement = () => {
   const { dispatch } = useContext(CounterContext);
   const [count, setCount] = useState(0);
 
@@ -21,9 +21,24 @@ export const Increment = () => {
         dispatch({ type: "ADD_TO_COUNTER", payload: asyncCounterInc() })
       }
     >
-      Increment: {count}
+      async Increment: {count}
     </button>
   );
+};
+
+export const Increment = () => {
+  const { dispatch } = useContext(CounterContext);
+  const [count, setCount] = useState(0);
+
+  const CounterInc = () => {
+    setCount(count => count + 1);
+    dispatch({ type: "ADD_TO_COUNTER", payload: { value: 1 } });
+    // setTimeout(() => {
+    //   dispatch({type: 'ADD_TO_COUNTER', payload: {value: 1} });
+    // }, 1000);
+  };
+
+  return <button onClick={CounterInc}>Increment: {count}</button>;
 };
 
 export const Decrement = () => {
